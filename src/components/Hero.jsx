@@ -22,7 +22,7 @@ function Hero() {
               <br />
               Services in
               <br />
-              <span className="text-teal-200">Nairobi</span>
+              <span className="text-teal-200">Nyeri</span>
             </h1>
             
             <p className="text-teal-100 text-lg max-w-lg mx-auto lg:mx-0 mb-8 leading-relaxed">
@@ -45,22 +45,6 @@ function Hero() {
               >
                 Our Services
               </a>
-            </div>
-            
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 max-w-md mx-auto lg:mx-0">
-              <div>
-                <p className="text-3xl font-bold text-white">500+</p>
-                <p className="text-teal-200 text-sm">Happy Clients</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-white">10+</p>
-                <p className="text-teal-200 text-sm">Years Experience</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-white">4.9</p>
-                <p className="text-teal-200 text-sm">Star Rating</p>
-              </div>
             </div>
           </div>
           

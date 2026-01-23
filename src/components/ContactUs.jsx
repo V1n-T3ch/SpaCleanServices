@@ -50,7 +50,7 @@ function ContactUs() {
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">Our Location</p>
-                  <p className="text-gray-600 text-sm">Westlands, Nairobi, Kenya</p>
+                  <p className="text-gray-600 text-sm">Nyeri, Kenya</p>
                 </div>
               </div>
               
@@ -62,7 +62,7 @@ function ContactUs() {
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">Phone Number</p>
-                  <p className="text-gray-600 text-sm">+254 712 345 678</p>
+                  <p className="text-gray-600 text-sm">0780 778880</p>
                 </div>
               </div>
               
@@ -74,7 +74,7 @@ function ContactUs() {
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">Email Address</p>
-                  <p className="text-gray-600 text-sm">info@spacleanservices.co.ke</p>
+                  <p className="text-gray-600 text-sm">sparcleankenya@gmail.com</p>
                 </div>
               </div>
               

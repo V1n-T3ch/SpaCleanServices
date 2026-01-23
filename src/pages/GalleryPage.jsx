@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 function GalleryPage() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedImage, setSelectedImage] = useState(null);
+  const [gallery, setGallery] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const filters = [
     { id: 'all', label: 'All Work' },
@@ -12,94 +17,32 @@ function GalleryPage() {
     { id: 'commercial', label: 'Commercial' },
     { id: 'deep', label: 'Deep Cleaning' },
     { id: 'carpet', label: 'Carpet & Upholstery' },
+    { id: 'pest', label: 'Pest Control' },
+    { id: 'construction', label: 'Post Construction' },
   ];
 
-  const gallery = [
-    {
-      id: 1,
-      src: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&h=400&fit=crop",
-      category: "residential",
-      title: "Living Room Deep Clean",
-      description: "Complete living room transformation"
-    },
-    {
-      id: 2,
-      src: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=400&fit=crop",
-      category: "residential",
-      title: "Kitchen Cleaning",
-      description: "Spotless kitchen after deep cleaning"
-    },
-    {
-      id: 3,
-      src: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=600&h=400&fit=crop",
-      category: "residential",
-      title: "Bathroom Sanitization",
-      description: "Thorough bathroom cleaning and sanitization"
-    },
-    {
-      id: 4,
-      src: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=400&fit=crop",
-      category: "commercial",
-      title: "Office Space",
-      description: "Corporate office cleaning service"
-    },
-    {
-      id: 5,
-      src: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=600&h=400&fit=crop",
-      category: "commercial",
-      title: "Conference Room",
-      description: "Meeting room deep clean"
-    },
-    {
-      id: 6,
-      src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop",
-      category: "carpet",
-      title: "Carpet Cleaning",
-      description: "Professional carpet stain removal"
-    },
-    {
-      id: 7,
-      src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop",
-      category: "residential",
-      title: "Whole House Clean",
-      description: "Complete home cleaning service"
-    },
-    {
-      id: 8,
-      src: "https://images.unsplash.com/photo-1527515545081-5db817172677?w=600&h=400&fit=crop",
-      category: "commercial",
-      title: "Retail Store",
-      description: "Commercial retail cleaning"
-    },
-    {
-      id: 9,
-      src: "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=600&h=400&fit=crop",
-      category: "deep",
-      title: "Oven Deep Clean",
-      description: "Kitchen appliance detailed cleaning"
-    },
-    {
-      id: 10,
-      src: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=400&fit=crop",
-      category: "residential",
-      title: "Bedroom Refresh",
-      description: "Fresh and clean bedroom space"
-    },
-    {
-      id: 11,
-      src: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=400&fit=crop",
-      category: "deep",
-      title: "Window Cleaning",
-      description: "Crystal clear window results"
-    },
-    {
-      id: 12,
-      src: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=400&fit=crop",
-      category: "carpet",
-      title: "Sofa Cleaning",
-      description: "Upholstery deep cleaning service"
-    },
-  ];
+  useEffect(() => {
+    fetchGallery();
+  }, []);
+
+  const fetchGallery = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${API_URL}/gallery`);
+      const data = await response.json();
+      
+      if (data.success) {
+        setGallery(data.data);
+      } else {
+        setError('Failed to load gallery');
+      }
+    } catch (err) {
+      setError('Failed to connect to server');
+      console.error('Fetch error:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const filteredGallery = activeFilter === 'all' 
     ? gallery 
@@ -110,7 +53,7 @@ function GalleryPage() {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="bg-linear-to-br from-teal-600 via-teal-700 to-teal-800 pt-32 pb-20">
+      <section className="bg-gradient-to-br from-teal-600 via-teal-700 to-teal-800 pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full mb-4 border border-white/20">
             <span className="text-white/90 text-sm font-medium">Our Portfolio</span>
@@ -148,44 +91,72 @@ function GalleryPage() {
       {/* Gallery Grid */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredGallery.map((item,) => (
-              <div
-                key={item.id}
-                className="group relative overflow-hidden rounded-2xl bg-gray-100 cursor-pointer"
-                onClick={() => setSelectedImage(item)}
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center py-16">
+              <div className="w-12 h-12 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+              <p className="text-gray-500">Loading gallery...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-16">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <p className="text-gray-500 mb-4">{error}</p>
+              <button 
+                onClick={fetchGallery}
+                className="text-teal-600 hover:text-teal-700 font-medium"
               >
-                <div className="aspect-4/3 overflow-hidden">
-                  <img
-                    src={item.src}
-                    alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-                
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <span className="inline-block px-3 py-1 bg-teal-500 text-white text-xs font-medium rounded-full mb-2 capitalize">
-                      {item.category}
-                    </span>
-                    <h3 className="text-white font-bold text-lg">{item.title}</h3>
-                    <p className="text-white/80 text-sm">{item.description}</p>
+                Try again
+              </button>
+            </div>
+          ) : filteredGallery.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredGallery.map((item) => (
+                <div
+                  key={item.id}
+                  className="group relative overflow-hidden rounded-2xl bg-gray-100 cursor-pointer"
+                  onClick={() => setSelectedImage(item)}
+                >
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={item.src}
+                      alt={item.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/600x400?text=Image+Not+Found';
+                      }}
+                    />
+                  </div>
+                  
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <span className="inline-block px-3 py-1 bg-teal-500 text-white text-xs font-medium rounded-full mb-2 capitalize">
+                        {item.category}
+                      </span>
+                      <h3 className="text-white font-bold text-lg">{item.title}</h3>
+                      <p className="text-white/80 text-sm">{item.description}</p>
+                    </div>
+                  </div>
+
+                  {/* View Icon */}
+                  <div className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                    <svg className="w-5 h-5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                    </svg>
                   </div>
                 </div>
-
-                {/* View Icon */}
-                <div className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                  <svg className="w-5 h-5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                  </svg>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {filteredGallery.length === 0 && (
+              ))}
+            </div>
+          ) : (
             <div className="text-center py-16">
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
               <p className="text-gray-500">No images found in this category.</p>
             </div>
           )}
