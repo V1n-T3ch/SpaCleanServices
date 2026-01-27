@@ -1,3 +1,5 @@
+import HeroImg from "../assets/hero.jpeg"
+
 function Hero() {
   return (
     <section className="relative min-h-screen bg-linear-to-br from-teal-600 via-teal-700 to-teal-800 pt-20">
@@ -18,7 +20,7 @@ function Hero() {
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-              Premium Cleaning
+              Premium Cleaning and Pest Control
               <br />
               Services in
               <br />
@@ -52,9 +54,9 @@ function Hero() {
           <div className="lg:w-1/2 flex justify-center lg:justify-end">
             <div className="relative">
               {/* Main image card */}
-              <div className="w-80 sm:w-[420px] h-[480px] rounded-3xl overflow-hidden shadow-2xl">
+              <div className="w-80 sm:w-105 h-120 rounded-3xl overflow-hidden shadow-2xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&h=800&fit=crop" 
+                  src={HeroImg} 
                   alt="Professional cleaner"
                   className="w-full h-full object-cover"
                 />

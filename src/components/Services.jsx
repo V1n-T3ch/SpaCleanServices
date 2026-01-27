@@ -1,4 +1,5 @@
 import Sofa from "../assets/sofa.jpeg"
+import Carpet from "../assets/carpet.jpeg"
 import House from "../assets/house.jpeg"
 import Pest from "../assets/pest.jpeg"
 import Construction from "../assets/construction.jpeg"
@@ -7,8 +8,14 @@ function Services() {
   const services = [
     {
       image: Sofa,
-      title: "Sofa & Carpet Cleaning",
+      title: "Sofa Cleaning",
       description: "Professional deep cleaning for sofas, carpets, and upholstery. We remove stains, odors, and allergens from your furniture for both homes and offices.",
+      features: ["Stain & odor removal", "Quick dry technology", "Home & office service"]
+    },
+    {
+      image: Carpet,
+      title: "Carpet Cleaning",
+      description: "Expert carpet cleaning services to revitalize your floors. We eliminate dirt, dust mites, and allergens, leaving your carpets fresh and clean.",
       features: ["Stain & odor removal", "Quick dry technology", "Home & office service"]
     },
     {
@@ -36,13 +43,13 @@ function Services() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <div className="inline-block px-4 py-1.5 bg-teal-50 rounded-full mb-4">
-            <span className="text-teal-600 text-sm font-semibold tracking-wide uppercase">What We Offer</span>
+            <span className="text-teal-600 text-sm font-semibold tracking-wide uppercase">We Offer</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Our Cleaning Services
+            Professional cleaning and pest control services
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Professional cleaning solutions tailored to your needs. We deliver quality results for homes and businesses across Nyeri.
+            Our expert team provides top-notch cleaning and pest control solutions tailored to your needs. Experience a cleaner, healthier environment today.
           </p>
         </div>
 
@@ -75,7 +82,7 @@ function Services() {
                 <ul className="space-y-3 mb-6">
                   {service.features.map((feature, idx) => (
                     <li key={idx} className="flex items-center gap-3 text-gray-600">
-                      <div className="w-5 h-5 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <div className="w-5 h-5 bg-teal-100 rounded-full flex items-center justify-center shrink-0">
                         <svg className="w-3 h-3 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                         </svg>

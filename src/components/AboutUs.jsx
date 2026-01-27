@@ -1,3 +1,6 @@
+import AboutBig from "../assets/about1.jpeg"
+import AboutSmall from "../assets/about2.jpeg"
+
 function AboutUs() {
   const features = [
     { icon: "🛡️", title: "Licensed & Insured", desc: "Full coverage for your peace of mind" },
@@ -17,14 +20,14 @@ function AboutUs() {
               <div className="w-full max-w-md mx-auto">
                 <div className="relative z-10">
                   <img 
-                    src="https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=500&h=600&fit=crop" 
+                    src={AboutBig}
                     alt="Cleaning service"
                     className="rounded-3xl shadow-xl w-full h-80 object-cover"
                   />
                 </div>
                 <div className="absolute -bottom-8 -right-8 w-48 h-48 z-20">
                   <img 
-                    src="https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=200&h=200&fit=crop" 
+                    src={AboutSmall}
                     alt="Clean home"
                     className="rounded-2xl shadow-xl w-full h-full object-cover border-4 border-white"
                   />
@@ -51,7 +54,7 @@ function AboutUs() {
             </h2>
             
             <p className="text-gray-600 mb-6 leading-relaxed">
-              SPA Cleaning Services has been transforming spaces across Nyeri for over a decade. Our professional team combines expertise with eco-friendly practices to deliver exceptional results every time.
+              SPARCleaning Services has been transforming spaces across Nyeri for over a decade. Our professional team combines expertise with eco-friendly practices to deliver exceptional results every time.
             </p>
             
             <p className="text-gray-600 mb-8 leading-relaxed">

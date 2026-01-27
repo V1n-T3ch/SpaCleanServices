@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 function ContactUs() {
   const [formData, setFormData] = useState({
@@ -8,15 +9,57 @@ function ContactUs() {
     service: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({ type: '', message: '' });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Thank you! We will contact you shortly.');
+    setIsSubmitting(true);
+    setSubmitStatus({ type: '', message: '' });
+
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      phone: formData.phone,
+      service: formData.service,
+      message: formData.message,
+      to_email: 'sparcleankenya@gmail.com'
+    };
+
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        templateParams,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+
+      setSubmitStatus({
+        type: 'success',
+        message: 'Thank you! Your request has been sent. We will contact you shortly.'
+      });
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        service: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      setSubmitStatus({
+        type: 'error',
+        message: 'Failed to send message. Please try again or contact us directly.'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -62,7 +105,7 @@ function ContactUs() {
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">Phone Number</p>
-                  <p className="text-gray-600 text-sm">0780 778880</p>
+                  <p className="text-gray-600 text-sm">0780 778880 or 0706 209465</p>
                 </div>
               </div>
               
@@ -79,7 +122,7 @@ function ContactUs() {
               </div>
               
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center hrink-0">
+                <div className="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center shrink-0">
                   <svg className="w-6 h-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -97,6 +140,28 @@ function ContactUs() {
             <div className="bg-gray-50 rounded-3xl p-8 md:p-10">
               <h3 className="text-xl font-bold text-gray-900 mb-6">Request a Quote</h3>
               
+              {/* Status Messages */}
+              {submitStatus.message && (
+                <div className={`mb-6 p-4 rounded-xl flex items-center gap-3 ${
+                  submitStatus.type === 'success' 
+                    ? 'bg-green-50 border border-green-200' 
+                    : 'bg-red-50 border border-red-200'
+                }`}>
+                  {submitStatus.type === 'success' ? (
+                    <svg className="w-5 h-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  )}
+                  <p className={`text-sm ${submitStatus.type === 'success' ? 'text-green-700' : 'text-red-700'}`}>
+                    {submitStatus.message}
+                  </p>
+                </div>
+              )}
+              
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
@@ -109,6 +174,7 @@ function ContactUs() {
                       className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition"
                       placeholder="John Doe"
                       required
+                      disabled={isSubmitting}
                     />
                   </div>
                   <div>
@@ -121,6 +187,7 @@ function ContactUs() {
                       className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition"
                       placeholder="+254 7XX XXX XXX"
                       required
+                      disabled={isSubmitting}
                     />
                   </div>
                 </div>
@@ -135,6 +202,7 @@ function ContactUs() {
                     className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition"
                     placeholder="john@example.com"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
                 
@@ -146,14 +214,14 @@ function ContactUs() {
                     onChange={handleChange}
                     className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition appearance-none"
                     required
+                    disabled={isSubmitting}
                   >
                     <option value="">Select a service</option>
-                    <option value="residential">Residential Cleaning</option>
-                    <option value="commercial">Commercial Cleaning</option>
-                    <option value="deep">Deep Cleaning</option>
-                    <option value="window">Window Cleaning</option>
-                    <option value="carpet">Carpet & Upholstery</option>
-                    <option value="moveinout">Move In/Out Cleaning</option>
+                    <option value="Sofa Cleaning">Sofa Cleaning</option>
+                    <option value="Carpet Cleaning">Carpet Cleaning</option>
+                    <option value="House Cleaning">House Cleaning</option>
+                    <option value="Pest Control">Pest Control</option>
+                    <option value="Post Construction Cleaning">Post Construction Cleaning</option>
                   </select>
                 </div>
                 
@@ -166,17 +234,28 @@ function ContactUs() {
                     rows="4"
                     className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition resize-none"
                     placeholder="Tell us about your space and cleaning needs..."
+                    disabled={isSubmitting}
                   ></textarea>
                 </div>
                 
                 <button
                   type="submit"
-                  className="w-full bg-teal-600 text-white py-4 rounded-xl hover:bg-teal-700 transition font-semibold flex items-center justify-center gap-2"
+                  disabled={isSubmitting}
+                  className="w-full bg-teal-600 text-white py-4 rounded-xl hover:bg-teal-700 transition font-semibold flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  Submit Request
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Submit Request
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </>
+                  )}
                 </button>
               </form>
             </div>
