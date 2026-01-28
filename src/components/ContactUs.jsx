@@ -93,7 +93,7 @@ function ContactUs() {
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">Our Location</p>
-                  <p className="text-gray-600 text-sm">Nyeri, Kenya</p>
+                  <p className="text-gray-600 text-sm">Nyeri County Assembley</p>
                 </div>
               </div>
               

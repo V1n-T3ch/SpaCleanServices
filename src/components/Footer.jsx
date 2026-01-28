@@ -15,10 +15,10 @@ function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                 </svg>
               </div>
-              <span className="text-xl font-bold">SPA<span className="text-teal-400">Clean</span></span>
+              <span className="text-xl font-bold">SPAR<span className="text-teal-400">Clean</span></span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
-              Professional cleaning services in N. Making homes and offices sparkle since 2015.
+              Professional cleaning services in Nyeri. Making homes and offices sparkle since 2015.
             </p>
             <div className="flex gap-4">
               {/* Facebook */}
@@ -98,7 +98,7 @@ function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-500 text-sm">
-              © 2025 SPA Clean Services. All rights reserved.
+              © 2025 SPAR Clean Services. All rights reserved.
             </p>
             <div className="flex gap-6">
               <a href="#" className="text-gray-500 hover:text-gray-400 text-sm">Privacy Policy</a>

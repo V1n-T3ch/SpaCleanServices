@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+import { getAllImages } from '../services/galleryService';
 
 function GalleryPage() {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -28,16 +27,11 @@ function GalleryPage() {
   const fetchGallery = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(`${API_URL}/gallery`);
-      const data = await response.json();
-      
-      if (data.success) {
-        setGallery(data.data);
-      } else {
-        setError('Failed to load gallery');
-      }
+      setError(null);
+      const images = await getAllImages();
+      setGallery(images);
     } catch (err) {
-      setError('Failed to connect to server');
+      setError('Failed to load gallery');
       console.error('Fetch error:', err);
     } finally {
       setIsLoading(false);
@@ -53,7 +47,7 @@ function GalleryPage() {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-teal-600 via-teal-700 to-teal-800 pt-32 pb-20">
+      <section className="bg-linear-to-br from-teal-600 via-teal-700 to-teal-800 pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full mb-4 border border-white/20">
             <span className="text-white/90 text-sm font-medium">Our Portfolio</span>
@@ -119,7 +113,7 @@ function GalleryPage() {
                   className="group relative overflow-hidden rounded-2xl bg-gray-100 cursor-pointer"
                   onClick={() => setSelectedImage(item)}
                 >
-                  <div className="aspect-[4/3] overflow-hidden">
+                  <div className="aspect-4/3 overflow-hidden">
                     <img
                       src={item.src}
                       alt={item.title}
@@ -131,7 +125,7 @@ function GalleryPage() {
                   </div>
                   
                   {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="absolute bottom-0 left-0 right-0 p-6">
                       <span className="inline-block px-3 py-1 bg-teal-500 text-white text-xs font-medium rounded-full mb-2 capitalize">
                         {item.category}

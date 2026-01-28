@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+import { 
+  getAllImages, 
+  uploadImage, 
+  updateImage, 
+  deleteImage 
+} from '../services/galleryService';
 
 function AdminGallery() {
   const [images, setImages] = useState([]);
@@ -27,7 +31,6 @@ function AdminGallery() {
     { id: 'construction', label: 'Post Construction' },
   ];
 
-  // Fetch images on component mount
   useEffect(() => {
     fetchImages();
   }, []);
@@ -36,16 +39,10 @@ function AdminGallery() {
     try {
       setIsLoading(true);
       setError(null);
-      const response = await fetch(`${API_URL}/gallery`);
-      const data = await response.json();
-      
-      if (data.success) {
-        setImages(data.data);
-      } else {
-        setError(data.message || 'Failed to fetch images');
-      }
+      const data = await getAllImages();
+      setImages(data);
     } catch (err) {
-      setError('Failed to connect to server');
+      setError('Failed to fetch images');
       console.error('Fetch error:', err);
     } finally {
       setIsLoading(false);
@@ -55,7 +52,6 @@ function AdminGallery() {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Validate file size (10MB)
       if (file.size > 10 * 1024 * 1024) {
         alert('File size must be less than 10MB');
         return;
@@ -75,41 +71,30 @@ function AdminGallery() {
     setError(null);
 
     try {
-      const submitData = new FormData();
-      submitData.append('title', formData.title);
-      submitData.append('description', formData.description);
-      submitData.append('category', formData.category);
-      
-      if (formData.file) {
-        submitData.append('image', formData.file);
-      }
-
-      let response;
-      
       if (editingImage) {
         // Update existing image
-        response = await fetch(`${API_URL}/gallery/${editingImage.id}`, {
-          method: 'PUT',
-          body: submitData
-        });
+        await updateImage(
+          editingImage.id,
+          formData.file,
+          formData.title,
+          formData.description,
+          formData.category,
+          editingImage
+        );
       } else {
         // Upload new image
-        response = await fetch(`${API_URL}/gallery/upload`, {
-          method: 'POST',
-          body: submitData
-        });
+        await uploadImage(
+          formData.file,
+          formData.title,
+          formData.description,
+          formData.category
+        );
       }
 
-      const data = await response.json();
-
-      if (data.success) {
-        await fetchImages(); // Refresh the images list
-        resetForm();
-      } else {
-        setError(data.message || 'Failed to save image');
-      }
+      await fetchImages();
+      resetForm();
     } catch (err) {
-      setError('Failed to save image. Please try again.');
+      setError(err.message || 'Failed to save image. Please try again.');
       console.error('Submit error:', err);
     } finally {
       setIsUploading(false);
@@ -128,24 +113,15 @@ function AdminGallery() {
     setIsModalOpen(true);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (image) => {
     if (!window.confirm('Are you sure you want to delete this image?')) {
       return;
     }
 
     try {
       setError(null);
-      const response = await fetch(`${API_URL}/gallery/${id}`, {
-        method: 'DELETE'
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setImages(images.filter(img => img.id !== id));
-      } else {
-        setError(data.message || 'Failed to delete image');
-      }
+      await deleteImage(image.id, image.fileName, image.fileId);
+      setImages(images.filter(img => img.id !== image.id));
     } catch (err) {
       setError('Failed to delete image. Please try again.');
       console.error('Delete error:', err);
@@ -171,14 +147,10 @@ function AdminGallery() {
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
               <Link to="/" className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                  </svg>
-                </div>
-                <span className="text-lg font-bold text-gray-900">SPA<span className="text-teal-600">Clean</span></span>
+                <img src="/src/assets/logo.webp" alt="Logo" className="w-24 h-24" />
+                <span className="text-xl font-bold text-gray-900">SPAR<span className="text-teal-600">Clean</span></span>
               </Link>
               <span className="text-gray-300">|</span>
               <span className="text-gray-600 font-medium">Admin Panel</span>
@@ -268,7 +240,7 @@ function AdminGallery() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {images.map((image) => (
               <div key={image.id} className="bg-white rounded-2xl overflow-hidden shadow-sm group">
-                <div className="aspect-[4/3] relative overflow-hidden">
+                <div className="aspect-4/3 relative overflow-hidden">
                   <img
                     src={image.src}
                     alt={image.title}
@@ -287,7 +259,7 @@ function AdminGallery() {
                       </svg>
                     </button>
                     <button
-                      onClick={() => handleDelete(image.id)}
+                      onClick={() => handleDelete(image)}
                       className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center hover:bg-red-600 transition"
                     >
                       <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
