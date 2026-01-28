@@ -6,6 +6,7 @@ import {
   updateImage, 
   deleteImage 
 } from '../services/galleryService';
+import Logo from '../../src/assets/logo.webp';
 
 function AdminGallery() {
   const [images, setImages] = useState([]);
@@ -149,7 +150,7 @@ function AdminGallery() {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-2">
               <Link to="/" className="flex items-center gap-2">
-                <img src="/src/assets/logo.webp" alt="Logo" className="w-24 h-24" />
+                <img src={Logo} alt="Logo" className="w-24 h-24" />
                 <span className="text-xl font-bold text-gray-900">SPAR<span className="text-teal-600">Clean</span></span>
               </Link>
               <span className="text-gray-300">|</span>

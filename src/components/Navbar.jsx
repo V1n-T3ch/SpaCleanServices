@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Logo from '../../src/assets/logo.webp';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +11,7 @@ function Navbar() {
         <div className="flex justify-between h-20">
           <div className="flex items-center">
             <Link to="/" className="flex items-center gap-2">
-                <img src="/src/assets/logo.webp" alt="Logo" className="w-24 h-24" />
+                <img src={Logo} alt="Logo" className="w-24 h-24" />
               <span className="text-xl font-bold text-gray-900">SPAR<span className="text-teal-600">Clean</span></span>
             </Link>
           </div>
