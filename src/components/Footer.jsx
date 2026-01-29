@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Logo from '../../src/assets/logo.webp';
 
 function Footer() {
   return (
@@ -9,13 +10,9 @@ function Footer() {
           
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-teal-600 rounded-lg flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                </svg>
-              </div>
-              <span className="text-xl font-bold">SPAR<span className="text-teal-400">Clean</span></span>
+            <Link to="/" className="flex items-center gap-2">
+                <img src={Logo} alt="Logo" className="w-24 h-24" />
+                <span className="text-xl font-bold">SPAR<span className="text-teal-400">Clean</span></span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
               Professional cleaning and pest control services in Nyeri. Making homes and offices sparkle since 2015.
