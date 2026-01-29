@@ -1,8 +1,10 @@
 import Sofa from "../assets/sofa.jpeg"
 import Carpet from "../assets/carpet.jpeg"
 import House from "../assets/house.jpeg"
-import Pest from "../assets/pest.jpeg"
+import Office from "../assets/office.jpeg"
+import Floor from "../assets/floor.jpeg"
 import Construction from "../assets/construction.jpeg"
+import Pest from "../assets/pest.jpeg"
 
 function Services() {
   const services = [
@@ -16,7 +18,7 @@ function Services() {
       image: Carpet,
       title: "Carpet Cleaning",
       description: "Expert carpet cleaning services to revitalize your floors. We eliminate dirt, dust mites, and allergens, leaving your carpets fresh and clean.",
-      features: ["Stain & odor removal", "Quick dry technology", "Home & office service"]
+      features: ["Deep cleaning", "Allergen removal", "Eco-friendly products"]
     },
     {
       image: House,
@@ -25,17 +27,29 @@ function Services() {
       features: ["All rooms covered", "Eco-friendly products", "Flexible scheduling"]
     },
     {
-      image: Pest,
-      title: "Pest Control",
-      description: "Effective pest control solutions for your home or business. We eliminate cockroaches, bedbugs, rodents, and other pests safely.",
-      features: ["Safe treatments", "Long-lasting results", "All pest types"]
+      image: Office,
+      title: "Office Cleaning",
+      description: "Professional cleaning services for commercial spaces. We ensure a clean and healthy work environment with tailored cleaning plans to suit your business needs.",
+      features: ["Custom plans", "After-hours service", "Sanitization included"]
     },
     {
       image: Construction,
       title: "Post Construction Cleaning",
       description: "Thorough cleaning after renovation or construction. We remove dust, debris, and residue to make your new space move-in ready.",
       features: ["Debris removal", "Deep sanitization", "Final polish finish"]
-    }
+    },
+    {
+      image: Floor,
+      title: "Floor Scrubbing",
+      description: "Professional floor scrubbing and polishing services for all types of flooring. We restore shine and cleanliness to your hard floors, enhancing their appearance and longevity.",
+      features: ["All floor types", "Restores shine", "Protective finish"]
+    },
+    {
+      image: Pest,
+      title: "Pest Control",
+      description: "Effective pest control solutions for your home or business. We eliminate cockroaches, bedbugs, rodents, and other pests safely.",
+      features: ["Safe treatments", "Long-lasting results", "All pest types"]
+    },
   ];
 
   return (

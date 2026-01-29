@@ -18,7 +18,7 @@ function Footer() {
               <span className="text-xl font-bold">SPAR<span className="text-teal-400">Clean</span></span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
-              Professional cleaning services in Nyeri. Making homes and offices sparkle since 2015.
+              Professional cleaning and pest control services in Nyeri. Making homes and offices sparkle since 2015.
             </p>
             <div className="flex gap-4">
               {/* Facebook */}
