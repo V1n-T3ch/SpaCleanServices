@@ -12,7 +12,7 @@ function Footer() {
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center gap-2">
                 <img src={Logo} alt="Logo" className="w-24 h-24" />
-                <span className="text-xl font-bold">Spar<span className="text-teal-400">Clean</span></span>
+                <span className="text-xl font-bold">Spar<span className="text-teal-400">Clean Services</span></span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
               Professional cleaning and pest control services in Nyeri. Making homes and offices sparkle since 2015.
