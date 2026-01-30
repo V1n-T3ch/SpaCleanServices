@@ -12,7 +12,7 @@ function Navbar() {
           <div className="flex items-center">
             <Link to="/" className="flex items-center gap-2">
                 <img src={Logo} alt="Logo" className="w-24 h-24" />
-              <span className="text-xl font-bold text-gray-900">SPAR<span className="text-teal-600">Clean</span></span>
+              <span className="text-xl font-bold text-gray-900">Spar<span className="text-teal-600">Clean</span></span>
             </Link>
           </div>
           

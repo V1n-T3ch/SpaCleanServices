@@ -12,7 +12,7 @@ function Footer() {
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center gap-2">
                 <img src={Logo} alt="Logo" className="w-24 h-24" />
-                <span className="text-xl font-bold">SPAR<span className="text-teal-400">Clean</span></span>
+                <span className="text-xl font-bold">Spar<span className="text-teal-400">Clean</span></span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
               Professional cleaning and pest control services in Nyeri. Making homes and offices sparkle since 2015.
@@ -95,7 +95,7 @@ function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-500 text-sm">
-              © 2025 SPAR Clean Services. All rights reserved.
+              © 2025 Spar Clean and Fumigation Services. All rights reserved.
             </p>
             <div className="flex gap-6">
               <a href="#" className="text-gray-500 hover:text-gray-400 text-sm">Privacy Policy</a>

@@ -54,7 +54,7 @@ function AboutUs() {
             </h2>
             
             <p className="text-gray-600 mb-6 leading-relaxed">
-              SPAR Cleaning and Fumigation Services has been transforming spaces across Nyeri for over a decade. Our professional team combines expertise with eco-friendly practices to deliver exceptional results every time.
+              Spar Cleaning and Fumigation Services has been transforming spaces across Nyeri for over a decade. Our professional team combines expertise with eco-friendly practices to deliver exceptional results every time.
             </p>
             
             <p className="text-gray-600 mb-8 leading-relaxed">
