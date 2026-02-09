@@ -55,10 +55,13 @@ function Footer() {
           <div>
             <h4 className="font-semibold text-white mb-4">Our Services</h4>
             <ul className="space-y-3">
-              <li><a href="#services" className="text-gray-400 hover:text-teal-400 transition text-sm">Sofa & Carpet Cleaning</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-teal-400 transition text-sm">Sofa Cleaning</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-teal-400 transition text-sm">Carpet Cleaning</a></li>
               <li><a href="#services" className="text-gray-400 hover:text-teal-400 transition text-sm">House Cleaning</a></li>
-              <li><a href="#services" className="text-gray-400 hover:text-teal-400 transition text-sm">Pest Control</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-teal-400 transition text-sm">Office Cleaning</a></li>
               <li><a href="#services" className="text-gray-400 hover:text-teal-400 transition text-sm">Post Construction Cleaning</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-teal-400 transition text-sm">Floor Scrubbing</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-teal-400 transition text-sm">Pest Control</a></li>
             </ul>
           </div>
           
